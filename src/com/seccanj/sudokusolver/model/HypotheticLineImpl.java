@@ -12,7 +12,11 @@ public class HypotheticLineImpl extends LineImpl implements HypotheticLine {
 		line[n-1] = n;
 	}
 
-	public void resetHypotesis(int n) {
+	public boolean resetHypotesis(int n) {
+		boolean result = (line[n-1] == n);
+
 		line[n-1] = 0;
+		
+		return result;
 	}
 }

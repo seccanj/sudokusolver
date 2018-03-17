@@ -13,6 +13,8 @@ public class RuleDictionary implements Iterable<Rule> {
 	public RuleDictionary() {
 		//rules.add(new SingleHypothesis());
 		rules.add(new MandatoryPositionInSquare());
+		rules.add(new SingleRowInSquare());
+		rules.add(new SingleColumnInSquare());
 	}
 
 	@Override

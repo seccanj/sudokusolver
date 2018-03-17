@@ -4,6 +4,6 @@ public interface HypotheticLine extends Line {
 	
 	void setHypotesis(int n);
 	
-	void resetHypotesis(int n);
+	boolean resetHypotesis(int n);
 	
 }

@@ -28,7 +28,7 @@ public class Board {
 
 	public static Board initRadom() {
 		Board b = new Board(9, 9);
-		
+
 		/*
 		b.numbers = new int[][] {
 			{5, 3, 0, 0, 7, 0, 0, 0, 0},
@@ -41,7 +41,7 @@ public class Board {
 			{0, 0, 0, 4, 1, 9, 0, 0, 5},
 			{0, 0, 0, 0, 8, 0, 0, 7, 9}				
 		};
-		*/
+
 
 		b.numbers = new int[][] {
 			{0, 0, 2, 1, 0, 0, 0, 0, 6},
@@ -53,6 +53,31 @@ public class Board {
 			{0, 2, 0, 0, 5, 1, 0, 0, 9},
 			{6, 5, 0, 0, 0, 0, 7, 3, 1},
 			{0, 9, 8, 3, 0, 0, 0, 4, 0}				
+		};
+		
+		b.numbers = new int[][] {
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0}				
+		};
+		*/
+
+		b.numbers = new int[][] {
+			{0, 0, 3, 7, 4, 0, 0, 0, 1},
+			{0, 0, 8, 0, 0, 5, 2, 0, 4},
+			{7, 2, 0, 0, 1, 0, 5, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 9, 0},
+			{0, 0, 5, 9, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 7, 0, 1, 8},
+			{0, 0, 0, 1, 0, 0, 9, 0, 0},
+			{6, 0, 0, 0, 0, 0, 0, 8, 7},
+			{9, 8, 0, 0, 0, 6, 0, 0, 0}				
 		};
 		
 		return b;
@@ -166,8 +191,8 @@ public class Board {
 		hypothesis[row][col].setHypotesis(n);
 	}
 	
-	public void resetHypothesis(int row, int col, int n) {
-		hypothesis[row][col].resetHypotesis(n);
+	public boolean resetHypothesis(int row, int col, int n) {
+		return hypothesis[row][col].resetHypotesis(n);
 	}
 	
 	/*
