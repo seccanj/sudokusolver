@@ -6,24 +6,15 @@ import java.util.Iterator;
 public class LineImpl implements Line {
 
 	Integer[] line;
-	Integer[] hypothesis = new Integer[9];
 	
 	public LineImpl(int[] line) {
 		this.line = Arrays.stream(line).boxed().toArray(Integer[]::new);
-		init();
 	}
 
 	public LineImpl() {
 		line = new Integer[9];
-		init();
 	}
 
-	protected void init() {
-		for (int i=0; i<9; i++) {
-			hypothesis[i] = 0;
-		}
-	}
-	
 	@Override
 	public boolean contains(int n) {
 		int i = 0;
@@ -34,12 +25,27 @@ public class LineImpl implements Line {
 		return i < 9;
 	}
 	
+	/*
 	public int and() {
 		return Arrays.stream(hypothesis).reduce(0, (a, v) -> (a == -1 ? a : v));
 	}
 	
 	public int or() {
 		return Arrays.stream(hypothesis).reduce(0, (a, v) -> (a != -1 ? a : v));
+	}
+	*/
+	
+	public int size() {
+		return Arrays.stream(line)
+				.map(n -> ((n > 0) ? 1 : 0))
+				.reduce(0, (s, n) -> s + n);
+	}
+	
+	public int getFirstValue() {
+		return Arrays.stream(line)
+				.filter(n -> (n > 0))
+				.findFirst()
+				.get();
 	}
 	
 	@Override

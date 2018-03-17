@@ -1,7 +1,17 @@
 package com.seccanj.sudokusolver.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SquareImpl extends LineImpl implements Square {
 
+	public int squareIdx;
+	
+	public SquareImpl(int squareIdx) {
+		super();
+		this.squareIdx = squareIdx;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -37,12 +47,50 @@ public class SquareImpl extends LineImpl implements Square {
 		line[i*3 + j] = value;
 	}
 	
+	@Override
+	public List<Line> getRows(Board board) {
+		int firstRow = getFirstRowIdx();
+		
+		List<Line> rows = new ArrayList<>();
+		rows.add(board.row(firstRow));
+		rows.add(board.row(firstRow+1));
+		rows.add(board.row(firstRow+2));
+		
+		return rows;
+	}
+
+	@Override
+	public List<Line> getCols(Board board) {
+		int firstCol = getFirstColIdx();
+		
+		List<Line> cols = new ArrayList<>();
+		cols.add(board.col(firstCol));
+		cols.add(board.col(firstCol+1));
+		cols.add(board.col(firstCol+2));
+		
+		return cols;
+	}
+
+	@Override
+	public int getFirstRowIdx() {
+		return ((int)squareIdx / 3) * 3;
+		
+	}
+
+	@Override
+	public int getFirstColIdx() {
+		return ((int)squareIdx % 3) * 3;
+	}
+	
+	@Override
 	public int getValueHypotesis(int i, int j) {
-		return hypothesis[i*3 + j];
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
+	@Override
 	public void setHypotesis(int i, int j, int value) {
-		hypothesis[i*3 + j] = value;
+		// TODO Auto-generated method stub
+		
 	}
-
 }

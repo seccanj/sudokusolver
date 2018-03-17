@@ -11,7 +11,8 @@ public class RuleDictionary implements Iterable<Rule> {
 	private List<Rule> rules = new ArrayList<Rule>();
 	
 	public RuleDictionary() {
-		rules.add(new MandatoryPosition());
+		//rules.add(new SingleHypothesis());
+		rules.add(new MandatoryPositionInSquare());
 	}
 
 	@Override

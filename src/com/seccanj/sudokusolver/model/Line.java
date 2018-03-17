@@ -4,4 +4,7 @@ public interface Line extends Iterable<Integer> {
 
 	boolean contains(int n);
 
+	int size();
+	
+	int getFirstValue();
 }
