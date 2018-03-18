@@ -16,9 +16,7 @@ public class HiddenPairsInRows implements Rule {
     private static final Logger logger = LogManager.getLogger(HiddenPairsInRows.class);
 
     /**
-	 * Given a square and a number, determines whether there is only one possible
-	 * position in the square for the given number. If so, sets the number on the
-	 * board.
+	 * See {@linkplain https://www.sudokuoftheday.com/techniques/hidden-pairs-triples/}
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {

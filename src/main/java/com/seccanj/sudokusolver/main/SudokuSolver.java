@@ -19,7 +19,7 @@ public class SudokuSolver {
 		
 		Board board = Board.initRadom();
 		
-		logger.info("\n"+board.toString());
+		logger.info("\nInitial board:\n"+board.toString());
 
 		logger.info("\n");
 
@@ -68,7 +68,7 @@ public class SudokuSolver {
 		});
 		*/
 
-		logger.info("\n\n"+board.toString());
+		logger.info("\nFinal board:\n"+board.toString());
 		
 		/*
 		logger.trace("\n\n\n");

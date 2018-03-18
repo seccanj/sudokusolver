@@ -13,8 +13,8 @@ public class SingleColumnInSquare implements Rule {
 
 	/**
 	 * Given a square and a number, if in the square there are hypothesis for the number only on a
-	 * row remove hypothesis for the number from the same row in other squares.
-	 * Same for a column.
+	 * column remove hypothesis for the number from the same column in other squares.
+	 * Same for a row, see {@link SingleRowInSquare}.
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
