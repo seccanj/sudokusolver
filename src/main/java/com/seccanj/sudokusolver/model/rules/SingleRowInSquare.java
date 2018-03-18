@@ -1,10 +1,15 @@
 package com.seccanj.sudokusolver.model.rules;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.seccanj.sudokusolver.model.Board;
 import com.seccanj.sudokusolver.model.Rule;
 import com.seccanj.sudokusolver.model.Square;
 
 public class SingleRowInSquare implements Rule {
+
+    private static final Logger logger = LogManager.getLogger(SingleRowInSquare.class);
 
 	/**
 	 * Given a square and a number, if in the square there are hypothesis for the number only on a
@@ -13,7 +18,7 @@ public class SingleRowInSquare implements Rule {
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
-		System.out.println("Matching " + SingleRowInSquare.class.getName() + " for number " + n + " on square "
+		logger.debug("Matching " + SingleRowInSquare.class.getName() + " for number " + n + " on square "
 				+ squareIdx + " ...");
 
 		boolean result = false;
@@ -43,7 +48,7 @@ public class SingleRowInSquare implements Rule {
 			}
 
 			if (result) {
-				System.out.println("--- Match reduction! on row " + rowWithHypothesis + " in square "+squareIdx+" for number "+n+" (SingleRowInSquare)");
+				logger.info("--- Match reduction! on row " + rowWithHypothesis + " in square "+squareIdx+" for number "+n+" (" + SingleRowInSquare.class.getName() + ")");
 			}
 		}
 		

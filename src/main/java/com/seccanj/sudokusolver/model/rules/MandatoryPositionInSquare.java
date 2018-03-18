@@ -2,12 +2,17 @@ package com.seccanj.sudokusolver.model.rules;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.seccanj.sudokusolver.model.Board;
 import com.seccanj.sudokusolver.model.Line;
 import com.seccanj.sudokusolver.model.Rule;
 import com.seccanj.sudokusolver.model.Square;
 
 public class MandatoryPositionInSquare implements Rule {
+
+    private static final Logger logger = LogManager.getLogger(MandatoryPositionInSquare.class);
 
 	/**
 	 * Given a square and a number, determines whether there is only one possible
@@ -16,7 +21,7 @@ public class MandatoryPositionInSquare implements Rule {
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
-		System.out.println("Matching " + MandatoryPositionInSquare.class.getName() + " for number " + n + " on square "
+		logger.debug("Matching " + MandatoryPositionInSquare.class.getName() + " for number " + n + " on square "
 				+ squareIdx + " ...");
 
 		boolean result = false;
@@ -43,7 +48,7 @@ public class MandatoryPositionInSquare implements Rule {
 		}
 
 		if (numImpossible == 8) {
-			System.out.println("--- Match! [" + (maybeRow) + "][" + (maybeCol) + "] = " + n + " (MandatoryPositionInSquare)");
+			logger.info("--- Match! [" + (maybeRow) + "][" + (maybeCol) + "] = " + n + " ("+MandatoryPositionInSquare.class.getName()+")");
 
 			board.setValue(maybeRow, maybeCol, n);
 

@@ -3,10 +3,15 @@ package com.seccanj.sudokusolver.model;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Board {
 	private int[][] numbers;
 	private HypotheticLine[][] hypothesis;
 
+    private static final Logger logger = LogManager.getLogger(Board.class);
+	
 	public Board(int rows, int cols) {
 		numbers = new int[rows][];
 
@@ -66,8 +71,21 @@ public class Board {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0}				
 		};
-		*/
 
+		// Hidden pairs (1, 3) on row 3
+		b.numbers = new int[][] {
+			{8, 0, 1, 0, 0, 6, 0, 9, 4},
+			{3, 0, 0, 0, 0, 9, 0, 8, 0},
+			{9, 7, 0, 0, 8, 0, 5, 0, 0},
+			{5, 4, 7, 0, 6, 2, 0, 3, 0},
+			{6, 3, 2, 0, 0, 0, 0, 5, 0},
+			{1, 9, 8, 3, 7, 5, 2, 4, 6},
+			{0, 8, 3, 6, 2, 0, 9, 1, 5},
+			{0, 6, 5, 1, 9, 8, 0, 0, 0},
+			{2, 1, 9, 5, 0, 0, 0, 0, 8}				
+		};
+		*/
+		
 		b.numbers = new int[][] {
 			{0, 0, 3, 7, 4, 0, 0, 0, 1},
 			{0, 0, 8, 0, 0, 5, 2, 0, 4},
@@ -79,7 +97,7 @@ public class Board {
 			{6, 0, 0, 0, 0, 0, 0, 8, 7},
 			{9, 8, 0, 0, 0, 6, 0, 0, 0}				
 		};
-		
+
 		return b;
 	}
 	
@@ -156,6 +174,8 @@ public class Board {
 	public void setValue(int row, int col, int n) {
 		numbers[row][col] = n;
 		
+		logger.trace(">>>>>>>> setValue - hypothesis [5, 0]="+hypothesis[5][0].toString());
+		
 		for (int i=0; i<9; i++) {
 			// Remove hypothesis for every number on the set cell
 			resetHypothesis(row, col, i+1);
@@ -176,7 +196,7 @@ public class Board {
 			}
 		}
 
-		System.out.println(toString());
+		logger.info("\n"+toString());
 	}
 	
 	public boolean containsHypothesis(int row, int col, int n) {
@@ -184,14 +204,21 @@ public class Board {
 	}
 
 	public HypotheticLine getHypothesis(int row, int col) {
+		
+		logger.trace(">>>>>>>>>> --- getHypothesys["+row+","+col+"]="+hypothesis[row][col]);
+		
 		return hypothesis[row][col];
 	}
 
 	public void setHypothesis(int row, int col, int n) {
+		logger.trace(">>>>>>>>>> --- setHypothesys["+row+","+col+"]->"+n+" where is "+hypothesis[row][col]);
+
 		hypothesis[row][col].setHypotesis(n);
 	}
 	
 	public boolean resetHypothesis(int row, int col, int n) {
+		logger.trace(">>>>>>>>>> --- resetHypothesis["+row+","+col+"]->"+n+" where is "+hypothesis[row][col]);
+
 		return hypothesis[row][col].resetHypotesis(n);
 	}
 	
@@ -215,6 +242,10 @@ public class Board {
 		});
 
 		return sb.toString();
+	}
+
+	public void resetAllHypothesis(int row, int col) {
+		hypothesis[row][col].resetAllHypothesis();
 	}
 
 }

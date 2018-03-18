@@ -81,16 +81,4 @@ public class SquareImpl extends LineImpl implements Square {
 	public int getFirstColIdx() {
 		return ((int)squareIdx % 3) * 3;
 	}
-	
-	@Override
-	public int getValueHypotesis(int i, int j) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setHypotesis(int i, int j, int value) {
-		// TODO Auto-generated method stub
-		
-	}
 }

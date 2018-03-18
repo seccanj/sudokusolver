@@ -16,8 +16,4 @@ public interface Square extends Line {
 
 	public int getFirstColIdx();
 	
-	public int getValueHypotesis(int i, int j);
-
-	public void setHypotesis(int i, int j, int value);
-	
 }

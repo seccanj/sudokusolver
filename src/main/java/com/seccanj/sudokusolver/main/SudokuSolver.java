@@ -1,5 +1,8 @@
 package com.seccanj.sudokusolver.main;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.seccanj.sudokusolver.model.Board;
 import com.seccanj.sudokusolver.model.Square;
 import com.seccanj.sudokusolver.model.rules.HypothesisMaker;
@@ -8,16 +11,17 @@ import com.seccanj.sudokusolver.model.rules.SingleHypothesis;
 
 public class SudokuSolver {
 
-	
-	public static void main(String[] args) {
+    private static final Logger logger = LogManager.getLogger(SudokuSolver.class);
+
+    public static void main(String[] args) {
 		
 		RuleDictionary rules = new RuleDictionary();
 		
 		Board board = Board.initRadom();
 		
-		System.out.println(board.toString());
+		logger.info("\n"+board.toString());
 
-		System.out.println("\n");
+		logger.info("\n");
 
 		// Algorithm:
 		//   For each number 1-9, set hypothesis
@@ -64,16 +68,16 @@ public class SudokuSolver {
 		});
 		*/
 
-		System.out.println(board.toString());
+		logger.info("\n\n"+board.toString());
 		
 		/*
-		System.out.println("\n\n\n");
+		logger.trace("\n\n\n");
 
-		Arrays.stream(b.getCols()).forEach(s -> System.out.println(s.toString()));
+		Arrays.stream(b.getCols()).forEach(s -> logger.trace(s.toString()));
 		
-		System.out.println("\n\n\n");
+		logger.trace("\n\n\n");
 
-		Arrays.stream(b.getSquares()).forEach(s -> System.out.println(s.toString()));
+		Arrays.stream(b.getSquares()).forEach(s -> logger.trace(s.toString()));
 		*/
 	}
 }
