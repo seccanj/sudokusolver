@@ -7,7 +7,7 @@ import com.seccanj.sudokusolver.model.Board;
 import com.seccanj.sudokusolver.model.Square;
 import com.seccanj.sudokusolver.model.rules.HypothesisMaker;
 import com.seccanj.sudokusolver.model.rules.RuleDictionary;
-import com.seccanj.sudokusolver.model.rules.SingleHypothesis;
+import com.seccanj.sudokusolver.model.rules.SingleCandidate;
 
 public class SudokuSolver {
 
@@ -45,7 +45,7 @@ public class SudokuSolver {
 		do {
 			hasChanges = false;
 			
-			hasChanges |= new SingleHypothesis().match(board);
+			hasChanges |= new SingleCandidate().match(board);
 			
 			for (int num=1; num<=9; num++) {
 				int val = num;
@@ -56,7 +56,7 @@ public class SudokuSolver {
 					if (!board.getSquares()[s].contains(val)) {
 						 hasChanges |= rules.getRules().stream()
 							 .map(r -> r.match(board, squareIdx, board.getSquares()[squareIdx], val))
-							 .reduce(false, (previous, current) -> previous || current);
+							 .reduce(false, (p, c) -> p || c);
 					}
 				}
 			}

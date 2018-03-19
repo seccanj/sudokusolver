@@ -7,18 +7,19 @@ import com.seccanj.sudokusolver.model.Board;
 import com.seccanj.sudokusolver.model.Rule;
 import com.seccanj.sudokusolver.model.Square;
 
-public class SingleColumnInSquare implements Rule {
+public class CandidateLinesInRow implements Rule {
 
-    private static final Logger logger = LogManager.getLogger(SingleColumnInSquare.class);
+    private static final Logger logger = LogManager.getLogger(CandidateLinesInRow.class);
 
 	/**
 	 * Given a square and a number, if in the square there are hypothesis for the number only on a
 	 * column remove hypothesis for the number from the same column in other squares.
-	 * Same for a row, see {@link SingleRowInSquare}.
+	 * Same for a row, see {@link CandidateLinesInColumn}.
+	 * See also {@linkplain <a href="https://www.sudokuoftheday.com/techniques/candidate-lines/">Candidate Lines</a>}
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
-		logger.debug("Matching " + SingleColumnInSquare.class.getName() + " for number " + n + " on square "
+		logger.debug("Matching " + CandidateLinesInRow.class.getName() + " for number " + n + " on square "
 				+ squareIdx + " ...");
 
 		boolean result = false;
@@ -49,7 +50,7 @@ public class SingleColumnInSquare implements Rule {
 		}
 
 		if (result) {
-			logger.info("--- Match reduction! on column " + columnWithHypothesis + " in square "+squareIdx+" for number "+n+" (" + SingleColumnInSquare.class.getName() + ")");
+			logger.info("--- Match reduction! on column " + columnWithHypothesis + " in square "+squareIdx+" for number "+n+" (" + CandidateLinesInRow.class.getName() + ")");
 		}
 		
 		return result;

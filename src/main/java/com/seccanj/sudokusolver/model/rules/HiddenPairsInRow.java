@@ -11,16 +11,16 @@ import com.seccanj.sudokusolver.model.HypotheticLine;
 import com.seccanj.sudokusolver.model.Rule;
 import com.seccanj.sudokusolver.model.Square;
 
-public class HiddenPairsInRows implements Rule {
+public class HiddenPairsInRow implements Rule {
 
-    private static final Logger logger = LogManager.getLogger(HiddenPairsInRows.class);
+    private static final Logger logger = LogManager.getLogger(HiddenPairsInRow.class);
 
     /**
-	 * See {@linkplain https://www.sudokuoftheday.com/techniques/hidden-pairs-triples/}
+	 * See {@linkplain <a href="https://www.sudokuoftheday.com/techniques/hidden-pairs-triples/">Hidden Pairs</a>}
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
-		logger.debug("Matching " + HiddenPairsInRows.class.getName() + " for number " + n + " on square "
+		logger.debug("Matching " + HiddenPairsInRow.class.getName() + " for number " + n + " on square "
 				+ squareIdx + " ...");
 
 		boolean result = false;
@@ -60,24 +60,24 @@ public class HiddenPairsInRows implements Rule {
 								}
 								
 								if (match) {
-									result |= maybeCols.stream()
-										.map(c -> {
-											if (board.getHypothesis(currRow, c).size() != 2) {
+									for (int col = 0; col < 9; col++) {
+										if (maybeCols.contains(col)) {
+											if (board.getHypothesis(currRow, col).size() != 2) {
+												board.resetAllHypothesis(currRow, col);
+												board.setHypothesis(currRow, col, hypotheticNum);
+												board.setHypothesis(currRow, col, hypotheticOtherNum);
 												
-												board.resetAllHypothesis(currRow, c);
-												board.setHypothesis(currRow, c, hypotheticNum);
-												board.setHypothesis(currRow, c, hypotheticOtherNum);
-	
-												return true;
+												result = true;
 											}
-											
-											return false;
-										})
-										.reduce(false, (p, c) -> p | c);
+										} else {
+											result |= board.resetHypothesis(currRow, col, hypotheticNum);
+											result |= board.resetHypothesis(currRow, col, hypotheticOtherNum);
+										}
+									}
 
 									if (result) {
 										logger.info("--- Match reduction! "+hypotheticNum+" and "+hypotheticOtherNum +
-											" in columns (" + maybeCols.stream().map(r -> r+",").reduce("", (a,b)->a+b) + ") and row " + currRow + " ("+HiddenPairsInRows.class.getName()+")");
+											" in columns (" + maybeCols.stream().map(r -> r+",").reduce("", (a,b)->a+b) + ") and row " + currRow + " ("+HiddenPairsInRow.class.getName()+")");
 									}
 								}
 							}

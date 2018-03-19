@@ -8,13 +8,18 @@ import com.seccanj.sudokusolver.model.HypotheticLine;
 import com.seccanj.sudokusolver.model.Rule;
 import com.seccanj.sudokusolver.model.Square;
 
-public class SingleHypothesis implements Rule {
+/**
+ * 
+ * See {@linkplain <a href="https://www.sudokuoftheday.com/techniques/single-candidate/">Single Candidate</a>}
+ *
+ */
+public class SingleCandidate implements Rule {
 
-    private static final Logger logger = LogManager.getLogger(SingleHypothesis.class);
+    private static final Logger logger = LogManager.getLogger(SingleCandidate.class);
 
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
-		logger.debug("Matching "+SingleHypothesis.class.getName()+" for number " + n + " on square "+squareIdx+" ...");
+		logger.debug("Matching "+SingleCandidate.class.getName()+" for number " + n + " on square "+squareIdx+" ...");
 
 		return match(board);
 	}
@@ -30,7 +35,7 @@ public class SingleHypothesis implements Rule {
 				if (h.size() == 1) {
 					int num = h.getFirstValue();
 					
-					logger.info("--- Match! ["+(i)+"]["+(j)+"] = "+num + " ("+SingleHypothesis.class.getName()+")");
+					logger.info("--- Match! ["+(i)+"]["+(j)+"] = "+num + " ("+SingleCandidate.class.getName()+")");
 
 					board.setValue(i, j, num);
 					

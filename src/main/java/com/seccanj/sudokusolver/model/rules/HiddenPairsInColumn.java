@@ -16,7 +16,7 @@ public class HiddenPairsInColumn implements Rule {
     private static final Logger logger = LogManager.getLogger(HiddenPairsInColumn.class);
 
     /**
-	 * See {@linkplain https://www.sudokuoftheday.com/techniques/hidden-pairs-triples/}
+	 * See {@linkplain <a href="https://www.sudokuoftheday.com/techniques/hidden-pairs-triples/">Hidden Pairs</a>}
 	 */
 	@Override
 	public boolean match(Board board, int squareIdx, Square square, int n) {
@@ -60,20 +60,21 @@ public class HiddenPairsInColumn implements Rule {
 								}
 								
 								if (match) {
-									result |= maybeRows.stream()
-										.map(r -> {
-											if (board.getHypothesis(r, currCol).size() != 2) {
+									for (int row = 0; row < 9; row++) {
+										if (maybeRows.contains(row)) {
+											if (board.getHypothesis(row, currCol).size() != 2) {
+												board.resetAllHypothesis(row, currCol);
+												board.setHypothesis(row, currCol, hypotheticNum);
+												board.setHypothesis(row, currCol, hypotheticOtherNum);
 												
-												board.resetAllHypothesis(r, currCol);
-												board.setHypothesis(r, currCol, hypotheticNum);
-												board.setHypothesis(r, currCol, hypotheticOtherNum);
-	
-												return true;
+												result = true;
 											}
+										} else {
+											result |= board.resetHypothesis(row, currCol, hypotheticNum);
+											result |= board.resetHypothesis(row, currCol, hypotheticOtherNum);
+										}
+									}
 											
-											return false;
-										})
-										.reduce(false, (p, c) -> p | c);
 
 									if (result) {
 										logger.info("--- Match reduction! "+hypotheticNum+" and "+hypotheticOtherNum +
