@@ -1,0 +1,108 @@
+package org.seccanj.sudokusolver
+ 
+import org.seccanj.sudokusolver.SudokuSolver.Number;
+import org.seccanj.sudokusolver.SudokuSolver.Board;
+import org.seccanj.sudokusolver.SudokuSolver.Position;
+import org.seccanj.sudokusolver.SudokuSolver.Hypothesis;
+
+
+rule "Set initial hypothesis"
+	ruleflow-group "setup"
+    when
+        Position( number == 0, $row : row, $column: column, $square : square )
+        
+        $board : Board()
+        $number : Number() from $board.numbers
+        
+        not Hypothesis ( row == $row, column == $column, number == $number.number)
+        not Position ( row == $row, number == $number.number)
+        not Position ( column == $column, number == $number.number)
+        not Position ( square == $square, number == $number.number)
+    then
+        System.out.println( "Setting initial hypothesis for "+$number.number+" on ("+$row+", "+$column+")");
+        insert( new Hypothesis($row, $column, $number.number) );
+end
+
+rule "Fixed position"
+	ruleflow-group "solving"
+    when
+        $board : Board()
+        $number : Number() from $board.numbers
+        
+        Hypothesis( number == $number.number, $row : row, $column: column, $square : square )
+
+        not Hypothesis ( row == $row, column != $column, number == $number.number )
+        not Hypothesis ( row != $row, column == $column, number == $number.number )
+        not Hypothesis ( row != $row, column != $column, square == $square, number == $number.number )
+
+        $position : Position ( row == $row, column == $column )
+        
+    then
+        System.out.println( "Fixed position - Number "+$number.number+" can only be in ("+$row+", "+$column+")");
+        modify ( $position ) {
+        	setNumber( $number.number )
+        }
+        
+end
+
+rule "Candidate lines in row"
+	ruleflow-group "solving"
+    when
+        $board : Board()
+        $number : Number() from $board.numbers
+        
+        Hypothesis( number == $number.number, $row : row, $column: column, $square : square )
+        
+        not Hypothesis ( row != $row, square == $square, number == $number.number )
+
+		$hypothesisToRemove : Hypothesis( row == $row, square != $square, number == $number.number )
+        
+    then
+        System.out.println( "Candidate lines in row - Removing hypothesis for number "+$hypothesisToRemove.getNumber()+" from ("+$row+", "+$column+")");
+    	delete ( $hypothesisToRemove )
+        
+end
+
+rule "Candidate lines in column"
+	ruleflow-group "solving"
+    when
+        $board : Board()
+        $number : Number() from $board.numbers
+        
+        Hypothesis( number == $number.number, $row : row, $column: column, $square : square )
+        
+        not Hypothesis ( column != $column, square == $square, number == $number.number )
+
+		$hypothesisToRemove : Hypothesis( column == $column, square != $square, number == $number.number )
+        
+    then
+        System.out.println( "Candidate lines in column - Removing hypothesis for number "+$hypothesisToRemove.getNumber()+" from ("+$row+", "+$column+")");
+    	delete ( $hypothesisToRemove )
+        
+end
+
+rule "Remove hypothesis on positions that have a number"
+	ruleflow-group "solving"
+    when
+        $board : Board()
+        $number : Number() from $board.numbers
+        
+        Position( number != 0, $row : row, $column: column )
+        $hypothesisToRemove : Hypothesis( row == $row, column == $column )
+
+    then
+        System.out.println( "Remove hypothesis on positions that have a number - Removing hypothesis for number "+$hypothesisToRemove.getNumber()+" from ("+$row+", "+$column+")");
+    	delete ( $hypothesisToRemove )
+
+end
+
+rule "Print board"
+	ruleflow-group "report"
+    when
+        $position : Position( )
+        not Position( (row * 9 + column) < ($position.row * 9 + $position.column) )
+    then
+        System.out.print( $position.toString() );
+        retract( $position );
+end
+
